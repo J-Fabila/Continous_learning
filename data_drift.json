@@ -1,0 +1,247 @@
+{
+  "patient_demographics_gender": {
+    "name": "patient_demographics_gender",
+    "drift": 1,
+    "p_value": 0.12,
+    "effect_size": 3.21,
+    "type": "NOMINAL",
+    "metadata_1": {
+      "cardinalityPerItem": {"female": 2715, "male": 584},
+      "numOfNotNull": 3299
+    },
+    "metadata_2": {
+      "cardinalityPerItem": {"female": 2500, "male": 799},
+      "numOfNotNull": 3299
+    }
+  },
+
+  "hyperkalemia_severity_categorizedValue": {
+    "name": "hyperkalemia_severity_categorizedValue",
+    "drift": 2,
+    "p_value": 0.01,
+    "effect_size": 12.54,
+    "type": "NOMINAL",
+    "metadata_1": {
+      "cardinalityPerItem": {"mild": 22, "moderate": 16, "normal": 295, "severe": 3},
+      "numOfNotNull": 336
+    },
+    "metadata_2": {
+      "cardinalityPerItem": {"mild": 40, "moderate": 60, "normal": 210, "severe": 26},
+      "numOfNotNull": 336
+    }
+  },
+
+  "conditions_heartFailure_earliest_first": {
+    "name": "conditions_heartFailure_earliest_first",
+    "drift": 0,
+    "p_value": 0.98,
+    "effect_size": 0.02,
+    "type": "NOMINAL",
+    "metadata_1": {
+      "cardinalityPerItem": {"I11.0": 561},
+      "numOfNotNull": 561
+    },
+    "metadata_2": {
+      "cardinalityPerItem": {"I11.0": 560},
+      "numOfNotNull": 560
+    }
+  },
+
+  "lab_results_hba1c_value_min": {
+    "name": "lab_results_hba1c_value_min",
+    "drift": 2,
+    "p_value": 0.02,
+    "effect_size": 0.85,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "Q1": 5.99,
+      "avg": 6.28,
+      "min": 4.80,
+      "Q2": 6.17,
+      "max": 7.91,
+      "Q3": 6.72,
+      "numOfNotNull": 29
+    },
+    "metadata_2": {
+      "Q1": 6.50,
+      "avg": 6.90,
+      "min": 5.10,
+      "Q2": 6.85,
+      "max": 8.40,
+      "Q3": 7.20,
+      "numOfNotNull": 31
+    }
+  },
+
+  "lab_results_hba1c_value_first": {
+    "name": "lab_results_hba1c_value_first",
+    "drift": 1,
+    "p_value": 0.08,
+    "effect_size": 0.42,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "Q1": 5.99,
+      "avg": 6.28,
+      "min": 4.80,
+      "Q2": 6.17,
+      "max": 7.91,
+      "Q3": 6.72,
+      "numOfNotNull": 29
+    },
+    "metadata_2": {
+      "Q1": 6.05,
+      "avg": 6.40,
+      "min": 4.90,
+      "Q2": 6.30,
+      "max": 8.00,
+      "Q3": 6.90,
+      "numOfNotNull": 29
+    }
+  },
+
+  "echocardiographs_lvef": {
+    "name": "echocardiographs_lvef",
+    "drift": 2,
+    "p_value": 0.005,
+    "effect_size": 1.35,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "Q1": 36,
+      "avg": 45.36,
+      "min": 36,
+      "Q2": 36,
+      "max": 70,
+      "Q3": 60,
+      "numOfNotNull": 115
+    },
+    "metadata_2": {
+      "Q1": 30,
+      "avg": 38.10,
+      "min": 25,
+      "Q2": 35,
+      "max": 65,
+      "Q3": 50,
+      "numOfNotNull": 118
+    }
+  },
+
+  "smoking_status_totalSmokingDuration_sum": {
+    "name": "smoking_status_totalSmokingDuration_sum",
+    "drift": 0,
+    "p_value": 1.0,
+    "effect_size": 0.0,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "Q1": 0,
+      "avg": 0.0,
+      "min": 0,
+      "Q2": 0,
+      "max": 0,
+      "Q3": 0,
+      "numOfNotNull": 3299
+    },
+    "metadata_2": {
+      "Q1": 0,
+      "avg": 0.0,
+      "min": 0,
+      "Q2": 0,
+      "max": 0,
+      "Q3": 0,
+      "numOfNotNull": 3299
+    }
+  },
+
+  "conditions_heartFailure_timeFromEarliest_first": {
+    "name": "conditions_heartFailure_timeFromEarliest_first",
+    "drift": 1,
+    "p_value": 0.07,
+    "effect_size": 0.65,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "Q1": 0,
+      "avg": 21.82,
+      "min": 0,
+      "Q2": 0,
+      "max": 264,
+      "Q3": 0,
+      "numOfNotNull": 3299
+    },
+    "metadata_2": {
+      "Q1": 0,
+      "avg": 25.10,
+      "min": 0,
+      "Q2": 0,
+      "max": 280,
+      "Q3": 0,
+      "numOfNotNull": 3299
+    }
+  },
+
+  "med_platelet_used_any": {
+    "name": "med_platelet_used_any",
+    "drift": 2,
+    "p_value": 0.03,
+    "effect_size": 5.87,
+    "type": "BOOLEAN",
+    "metadata_1": {
+      "numOfTrue": 2,
+      "numOfNotNull": 43
+    },
+    "metadata_2": {
+      "numOfTrue": 12,
+      "numOfNotNull": 43
+    }
+  },
+
+  "med_antiinfl_used_any": {
+    "name": "med_antiinfl_used_any",
+    "drift": 1,
+    "p_value": 0.09,
+    "effect_size": 3.12,
+    "type": "BOOLEAN",
+    "metadata_1": {
+      "numOfTrue": 12,
+      "numOfNotNull": 43
+    },
+    "metadata_2": {
+      "numOfTrue": 18,
+      "numOfNotNull": 43
+    }
+  },
+
+  "electrocardiographs_ecg_type_of_rhythm": {
+    "name": "electrocardiographs_ecg_type_of_rhythm",
+    "drift": 3,
+    "p_value": null,
+    "effect_size": null,
+    "type": "NOMINAL",
+    "metadata_1": {
+      "cardinalityPerItem": {},
+      "numOfNotNull": 0
+    },
+    "metadata_2": {
+      "cardinalityPerItem": {},
+      "numOfNotNull": 0
+    }
+  },
+
+  "lab_results_hba1c_value_stddev": {
+    "name": "lab_results_hba1c_value_stddev",
+    "drift": 4,
+    "p_value": null,
+    "effect_size": null,
+    "type": "NUMERIC",
+    "metadata_1": {
+      "numOfNotNull": 0
+    },
+    "metadata_2": {
+      "Q1": 0.2,
+      "avg": 0.5,
+      "min": 0.1,
+      "Q2": 0.4,
+      "max": 1.1,
+      "Q3": 0.8,
+      "numOfNotNull": 29
+    }
+  }
+}
