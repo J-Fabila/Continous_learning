@@ -21,13 +21,14 @@ def KS_test(old_data,new_data,feature,alpha=0.05):
         if p_value < alpha:
             return 2 # Data drift detected
         elif p_value < 1.0 and p_value > alpha:
-            return 1 # Changes but not a drift
+            drift = 1 # Changes but not a drift
         else:
-            return 0 # No changes
+            drift = 0 # No changes
     elif empty_1 == False and empty_2 == False:
-        return 3 # both empty, thus, no changes, thus, no data drift
+        drift = 3 # both empty, thus, no changes, thus, no data drift
     else:
-        return 4  # one is empty and the other no, thus, there were changes, thus, there are important changes in distribution
+        drift = 4  # one is empty and the other no, thus, there were changes, thus, there are important changes in distribution
+    return drift, p_value, ks_stat
 
 def chi2(old_data, new_data, feature, alpha=0.05):
     empty_1 = old_data[feature].notna().any()
@@ -42,15 +43,16 @@ def chi2(old_data, new_data, feature, alpha=0.05):
         contingency = pd.crosstab(combined[feature], combined["source"])
         stat, p_value, _, _ = chi2_contingency(contingency)
         if p_value < alpha:
-            return 2 # Data drift
+            drift = 2 # Data drift
         elif p_value < 1.0 and p_value > alpha:
-            return 1 # Changes but no data drift
+            drift = 1 # Changes but no data drift
         else:
-            return 0 # No changes
+            drift = 0 # No changes
     elif empty_1 == False and empty_2 == False:
-        return 3 # both empty, thus, no changes, thus, no data drift
+        drift = 3 # both empty, thus, no changes, thus, no data drift
     else:
-        return 4  # one is empty and the other no, thus, there were changes, thus, there are important changes in distribution
+        drift = 4  # one is empty and the other no, thus, there were changes, thus, there are important changes in distribution
+    return drift, p_value, stat
 
 def drift_detection(config):
 
@@ -70,37 +72,97 @@ def drift_detection(config):
         dat_2 = pd.read_csv(data_file)
 
     with open(config['metadata_file_1'], 'r') as file:
-        metadata = json.load(file)
+        metadata_1 = json.load(file)
+
+    with open(config['metadata_file_2'], 'r') as file:
+        metadata_2 = json.load(file)
 
     drift_dict = {}
-    for feat in metadata["entity"]["features"]:
+    metadata_2_index = {
+        f["name"]: f for f in metadata_2["entity"]["features"]
+    }
+
+    #for feat in metadata_1["entity"]["features"]:
+    for feat in metadata_1["entries"][0]["featureSet"]["features"]:    
         feature = feat["name"]
+        drift_dict[feature] = {
+                "name": feature,
+                "drift": None,
+                "p_value": None,
+                "effect_size": None,
+                "type": feat["dataType"],
+                "metadata_1": {},
+                "metadata_2": {}
+        }
+
         # IMPORTANT: DATE TIMES ARE NOT ANALYZED
         if feat["dataType"] == "NUMERIC":
-            drift = KS_test(dat_1,dat_2,feature,config["alpha"])
+            drift_level, p_value, effect_size = KS_test(dat_1,dat_2,feature,config["alpha"])
         elif feat["dataType"] == "NOMINAL":
-            drift = chi2(dat_1,dat_2,feature,config["alpha"])
+            drift_level, p_value, effect_size = chi2(dat_1,dat_2,feature,config["alpha"])
         elif feat["dataType"] == "BOOLEAN":
-            drift = chi2(dat_1,dat_2,feature,config["alpha"])
-        #print("FEATURE",feature, feat["dataType"], drift)
-        drift_dict[feature] = drift
+            drift_level, p_value, effect_size = chi2(dat_1,dat_2,feature,config["alpha"])
+        #print("FEATURE",feature, feat["dataType"], drift)        
+        drift_dict[feature]["drift"] = drift_level
+        drift_dict[feature]["p_value"] = p_value
+        drift_dict[feature]["effect_size"] = effect_size
 
-    for feat in metadata["entity"]["outcomes"]:
+        feat_2 = metadata_2_index.get(feature)
+
+        if feat["dataType"] == "NUMERIC":
+            drift_dict[feature]["metadata_1"] = {
+                "Q1": feat["statistics"]["Q1"],
+                "avg": feat["statistics"]["avg"],
+                "min": feat["statistics"]["min"],
+                "Q2": feat["statistics"]["Q2"],
+                "max": feat["statistics"]["max"],
+                "Q3": feat["statistics"]["Q3"],
+                "numOfNotNull": feat["statistics"]["numOfNotNull"],
+            }
+            drift_dict[feature]["metadata_2"] = {
+                "Q1": feat_2["statistics"]["Q1"],
+                "avg": feat_2["statistics"]["avg"],
+                "min": feat_2["statistics"]["min"],
+                "Q2": feat_2["statistics"]["Q2"],
+                "max": feat_2["statistics"]["max"],
+                "Q3": feat_2["statistics"]["Q3"],
+                "numOfNotNull": feat_2["statistics"]["numOfNotNull"],
+            }
+        elif feat["dataType"] == "NOMINAL":
+            drift_dict[feature]["metadata_1"] = {
+                "cardinalityPerItem": feat["statistics"]["cardinalityPerItem"],
+                "numOfNotNull": feat["statistics"]["numOfNotNull"]
+            }
+            drift_dict[feature]["metadata_2"] = {
+                "cardinalityPerItem": feat_2["statistics"]["cardinalityPerItem"],
+                "numOfNotNull": feat_2["statistics"]["numOfNotNull"]
+            }
+        elif feat["dataType"] ==  "BOOLEAN":
+            drift_dict[feature]["metadata_1"] = {
+                "numOfTrue": feat["statistics"]["numOfTrue"],
+                "numOfNotNull": feat["statistics"]["numOfNotNull"]
+            }
+            drift_dict[feature]["metadata_2"] = {
+                "numOfTrue": feat_2["statistics"]["numOfTrue"],
+                "numOfNotNull": feat_2["statistics"]["numOfNotNull"]
+            }
+
+    for feat in metadata_1["entity"]["outcomes"]:
+    #for feat in metadata["entries"][0]["featureSet"]["features"]:
+
         feature = feat["name"]
         if feat["dataType"] == "NUMERIC":
-            drift = KS_test(dat_1,dat_2,feature,config["alpha"])
+            drift_level, p_value, effect_size = KS_test(dat_1,dat_2,feature,config["alpha"])
         elif feat["dataType"] == "NOMINAL":
-            drift = chi2(dat_1,dat_2,feature,config["alpha"])
+            drift_level, p_value, effect_size = chi2(dat_1,dat_2,feature,config["alpha"])
         elif feat["dataType"] == "BOOLEAN":
-            drift = chi2(dat_1,dat_2,feature,config["alpha"])
+            drift_level, p_value, effect_size = chi2(dat_1,dat_2,feature,config["alpha"])
         #print("OUTCOME",feature, feat["dataType"], drift)
-        drift_dict[feature] = drift
-
-    # Se tendría que añadir también el p_value por cada variable, pero será para
-    # la siguiente iteración
 
     with open("data_drift.json", "w") as json_file_out:
         json.dump(drift_dict, json_file_out, indent=4)
+    # Estructura nueva:
+    # {"feature":{"drift_level":int,"p_value":float,"effect_size":float,"metadata_old":{METADATA},"metadata_new":{METADATA}}}
     # se podría hacer que devuelva varios valores:
     # 0 : sin cambios
     # 1 : cambio en los valores pero sin data drift
@@ -114,6 +176,7 @@ if __name__ == "__main__":
     parser.add_argument("--data_file_1", type=str, default="" , help="Data file 1")
     parser.add_argument("--data_file_2",type=str, default="", help="Data file 2")
     parser.add_argument("--metadata_file_1", type=str, default="", help="metadata file 1")
+    parser.add_argument("--metadata_file_2", type=str, default="", help="metadata file 1")
     parser.add_argument("--alpha", type=float, default=0.05 , help="alpha threshold")
 
     args = parser.parse_args()
