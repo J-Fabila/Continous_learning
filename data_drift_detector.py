@@ -2,6 +2,7 @@ import json
 import numpy as np
 import pandas as pd
 import argparse
+import requests
 from scipy.stats import ks_2samp
 from scipy.stats import chi2_contingency
 from datetime import datetime, timezone
@@ -196,7 +197,7 @@ def drift_detection(config):
         drift_features.append(feature_data)
 
     output = {
-        "event_type": config.get("event_type", "data_drift_analysis"),
+        "event_type": "data_drift_analysis",
         "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "dataset_name": config.get("dataset_name", "unknown"),
         "model_name": config.get("model_name", "unknown"),
@@ -206,6 +207,19 @@ def drift_detection(config):
 
     with open("data_drift.json", "w") as json_file_out:
         json.dump(output, json_file_out, indent=4)
+
+    logstash_url = "https://matrix.srdc.com.tr/ai4hf/logstash"
+    try:
+        response = requests.post(
+            logstash_url,
+            auth=("logstash_internal", "2sgQdH0KrHa5c2lS0LGg"),
+            json=output,
+            headers={"Content-Type": "application/json"}
+        )
+        response.raise_for_status()
+        print(f"Successfully sent data drift analysis to Logstash. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to send data drift analysis to Logstash: {e}")
 
 if __name__ == "__main__":
 
