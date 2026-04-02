@@ -1,0 +1,299 @@
+{
+  "event_type": "data_drift_analysis",
+  "timestamp": "2026-03-31T19:17:03.902Z",
+  "dataset_name": "heart_failure_dataset",
+  "model_name": "hf-risk-predictor",
+  "site": "pilot-site-1",
+  "features": [
+    {
+      "feature_name": "patient_demographics_gender",
+      "feature_type": "NOMINAL",
+      "drift": 1,
+      "drift_label": "changes_no_drift",
+      "drift_description": "There are changes but no data drift",
+      "p_value": 0.12,
+      "effect_size": 3.21,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "cardinalityPerItem": {
+          "female": 2715,
+          "male": 584
+        },
+        "numOfNotNull": 3299
+      },
+      "current_stats": {
+        "cardinalityPerItem": {
+          "female": 2500,
+          "male": 799
+        },
+        "numOfNotNull": 3299
+      }
+    },
+    {
+      "feature_name": "hyperkalemia_severity_categorizedValue",
+      "feature_type": "NOMINAL",
+      "drift": 2,
+      "drift_label": "data_drift",
+      "drift_description": "Data drift",
+      "p_value": 0.01,
+      "effect_size": 12.54,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "cardinalityPerItem": {
+          "mild": 22,
+          "moderate": 16,
+          "normal": 295,
+          "severe": 3
+        },
+        "numOfNotNull": 336
+      },
+      "current_stats": {
+        "cardinalityPerItem": {
+          "mild": 40,
+          "moderate": 60,
+          "normal": 210,
+          "severe": 26
+        },
+        "numOfNotNull": 336
+      }
+    },
+    {
+      "feature_name": "conditions_heartFailure_earliest_first",
+      "feature_type": "NOMINAL",
+      "drift": 0,
+      "drift_label": "no_changes",
+      "drift_description": "No changes",
+      "p_value": 0.98,
+      "effect_size": 0.02,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "cardinalityPerItem": {
+          "I11.0": 561
+        },
+        "numOfNotNull": 561
+      },
+      "current_stats": {
+        "cardinalityPerItem": {
+          "I11.0": 560
+        },
+        "numOfNotNull": 560
+      }
+    },
+    {
+      "feature_name": "lab_results_hba1c_value_min",
+      "feature_type": "NUMERIC",
+      "drift": 2,
+      "drift_label": "data_drift",
+      "drift_description": "Data drift",
+      "p_value": 0.02,
+      "effect_size": 0.85,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "Q1": 5.99,
+        "avg": 6.28,
+        "min": 4.8,
+        "Q2": 6.17,
+        "max": 7.91,
+        "Q3": 6.72,
+        "numOfNotNull": 29
+      },
+      "current_stats": {
+        "Q1": 6.5,
+        "avg": 6.9,
+        "min": 5.1,
+        "Q2": 6.85,
+        "max": 8.4,
+        "Q3": 7.2,
+        "numOfNotNull": 31
+      }
+    },
+    {
+      "feature_name": "lab_results_hba1c_value_first",
+      "feature_type": "NUMERIC",
+      "drift": 1,
+      "drift_label": "changes_no_drift",
+      "drift_description": "There are changes but no data drift",
+      "p_value": 0.08,
+      "effect_size": 0.42,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "Q1": 5.99,
+        "avg": 6.28,
+        "min": 4.8,
+        "Q2": 6.17,
+        "max": 7.91,
+        "Q3": 6.72,
+        "numOfNotNull": 29
+      },
+      "current_stats": {
+        "Q1": 6.05,
+        "avg": 6.4,
+        "min": 4.9,
+        "Q2": 6.3,
+        "max": 8,
+        "Q3": 6.9,
+        "numOfNotNull": 29
+      }
+    },
+    {
+      "feature_name": "echocardiographs_lvef",
+      "feature_type": "NUMERIC",
+      "drift": 2,
+      "drift_label": "data_drift",
+      "drift_description": "Data drift",
+      "p_value": 0.005,
+      "effect_size": 1.35,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "Q1": 36,
+        "avg": 45.36,
+        "min": 36,
+        "Q2": 36,
+        "max": 70,
+        "Q3": 60,
+        "numOfNotNull": 115
+      },
+      "current_stats": {
+        "Q1": 30,
+        "avg": 38.1,
+        "min": 25,
+        "Q2": 35,
+        "max": 65,
+        "Q3": 50,
+        "numOfNotNull": 118
+      }
+    },
+    {
+      "feature_name": "smoking_status_totalSmokingDuration_sum",
+      "feature_type": "NUMERIC",
+      "drift": 0,
+      "drift_label": "no_changes",
+      "drift_description": "No changes",
+      "p_value": 1,
+      "effect_size": 0,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "Q1": 0,
+        "avg": 0,
+        "min": 0,
+        "Q2": 0,
+        "max": 0,
+        "Q3": 0,
+        "numOfNotNull": 3299
+      },
+      "current_stats": {
+        "Q1": 0,
+        "avg": 0,
+        "min": 0,
+        "Q2": 0,
+        "max": 0,
+        "Q3": 0,
+        "numOfNotNull": 3299
+      }
+    },
+    {
+      "feature_name": "conditions_heartFailure_timeFromEarliest_first",
+      "feature_type": "NUMERIC",
+      "drift": 1,
+      "drift_label": "changes_no_drift",
+      "drift_description": "There are changes but no data drift",
+      "p_value": 0.07,
+      "effect_size": 0.65,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "Q1": 0,
+        "avg": 21.82,
+        "min": 0,
+        "Q2": 0,
+        "max": 264,
+        "Q3": 0,
+        "numOfNotNull": 3299
+      },
+      "current_stats": {
+        "Q1": 0,
+        "avg": 25.1,
+        "min": 0,
+        "Q2": 0,
+        "max": 280,
+        "Q3": 0,
+        "numOfNotNull": 3299
+      }
+    },
+    {
+      "feature_name": "med_platelet_used_any",
+      "feature_type": "BOOLEAN",
+      "drift": 2,
+      "drift_label": "data_drift",
+      "drift_description": "Data drift",
+      "p_value": 0.03,
+      "effect_size": 5.87,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "numOfTrue": 2,
+        "numOfNotNull": 43
+      },
+      "current_stats": {
+        "numOfTrue": 12,
+        "numOfNotNull": 43
+      }
+    },
+    {
+      "feature_name": "med_antiinfl_used_any",
+      "feature_type": "BOOLEAN",
+      "drift": 1,
+      "drift_label": "changes_no_drift",
+      "drift_description": "There are changes but no data drift",
+      "p_value": 0.09,
+      "effect_size": 3.12,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "numOfTrue": 12,
+        "numOfNotNull": 43
+      },
+      "current_stats": {
+        "numOfTrue": 18,
+        "numOfNotNull": 43
+      }
+    },
+    {
+      "feature_name": "electrocardiographs_ecg_type_of_rhythm",
+      "feature_type": "NOMINAL",
+      "drift": 3,
+      "drift_label": "both_empty_no_drift",
+      "drift_description": "Both empty, thus, no changes, thus, no data drift",
+      "p_value": null,
+      "effect_size": null,
+      "effect_size_metric": "chi2",
+      "baseline_stats": {
+        "cardinalityPerItem": {},
+        "numOfNotNull": 0
+      },
+      "current_stats": {
+        "cardinalityPerItem": {},
+        "numOfNotNull": 0
+      }
+    },
+    {
+      "feature_name": "lab_results_hba1c_value_stddev",
+      "feature_type": "NUMERIC",
+      "drift": 4,
+      "drift_label": "one_empty_major_change",
+      "drift_description": "One is empty and the other no, thus, there were changes, thus, there are important changes in distribution",
+      "p_value": null,
+      "effect_size": null,
+      "effect_size_metric": "ks",
+      "baseline_stats": {
+        "numOfNotNull": 0
+      },
+      "current_stats": {
+        "Q1": 0.2,
+        "avg": 0.5,
+        "min": 0.1,
+        "Q2": 0.4,
+        "max": 1.1,
+        "Q3": 0.8,
+        "numOfNotNull": 29
+      }
+    }
+  ]
+}
