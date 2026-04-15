@@ -1,0 +1,145 @@
+{
+  "entries": [
+    {
+      "features": [
+        {"name": "patient_demographics_gender", "dataType": "NOMINAL"},
+        {"name": "encounters_encounterClass", "dataType": "NOMINAL"},
+        {"name": "encounters_admissionYear", "dataType": "NOMINAL"},
+        {"name": "patient_demographics_age", "dataType": "NUMERIC"},
+        {"name": "encounters_lengthOfStay", "dataType": "NUMERIC"},
+        {"name": "vital_signs_weight_value_p6mo_min", "dataType": "NUMERIC"},
+        {"name": "med_admins_history_diuretics_loop_any", "dataType": "BOOLEAN"},
+        {"name": "patient_flags_smoker", "dataType": "BOOLEAN"}
+      ],
+      "outcomes": [
+        {"name": "outcome_in_hospital_mortality", "dataType": "BOOLEAN"},
+        {"name": "outcome_readmission_30d", "dataType": "BOOLEAN"},
+        {"name": "outcome_discharge_disposition", "dataType": "NOMINAL"},
+        {"name": "outcome_severity_score", "dataType": "NUMERIC"}
+      ],
+      "datasetStats": {
+        "featureStats": {
+          "patient_demographics_gender": {
+            "numOfNotNull": 7900,
+            "valueSet": ["female", "male"],
+            "cardinalityPerItem": {
+              "female": 4500,
+              "male": 3400
+            }
+          },
+          "encounters_encounterClass": {
+            "numOfNotNull": 10000,
+            "valueSet": ["inpatient", "outpatient", "emergency"],
+            "cardinalityPerItem": {
+              "inpatient": 2100,
+              "outpatient": 2800,
+              "emergency": 5100
+            }
+          },
+          "encounters_admissionYear": {
+            "numOfNotNull": 10000,
+            "valueSet": ["2021", "2022", "2023", "2024"],
+            "cardinalityPerItem": {
+              "2021": 800,
+              "2022": 1200,
+              "2023": 3500,
+              "2024": 4500
+            }
+          },
+          "patient_demographics_age": {
+            "numOfNotNull": 9950,
+            "min": 18,
+            "max": 99,
+            "avg": 68.1,
+            "q1": 58,
+            "q2": 70,
+            "q3": 81,
+            "histogram": [
+              {"bin": 30, "count": 400},
+              {"bin": 45, "count": 900},
+              {"bin": 60, "count": 2800},
+              {"bin": 75, "count": 3800},
+              {"bin": 90, "count": 2050}
+            ]
+          },
+          "encounters_lengthOfStay": {
+            "numOfNotNull": 9500,
+            "min": 1,
+            "max": 60,
+            "avg": 11.4,
+            "q1": 5,
+            "q2": 9,
+            "q3": 16,
+            "histogram": [
+              {"bin": 2, "count": 1200},
+              {"bin": 5, "count": 2500},
+              {"bin": 10, "count": 3000},
+              {"bin": 20, "count": 2000},
+              {"bin": 50, "count": 800}
+            ]
+          },
+          "vital_signs_weight_value_p6mo_min": {
+            "numOfNotNull": 8750,
+            "min": 40.0,
+            "max": 138.0,
+            "avg": 78.2,
+            "q1": 65.5,
+            "q2": 77.0,
+            "q3": 89.8,
+            "histogram": [
+              {"bin": 55, "count": 1100},
+              {"bin": 70, "count": 2500},
+              {"bin": 85, "count": 2900},
+              {"bin": 100, "count": 1600},
+              {"bin": 120, "count": 650}
+            ]
+          },
+          "med_admins_history_diuretics_loop_any": {
+            "numOfNotNull": 7900,
+            "numOfTrue": 3200
+          },
+          "patient_flags_smoker": {
+            "numOfNotNull": 9200,
+            "numOfTrue": 1950
+          }
+        },
+        "outcomeStats": {
+          "outcome_in_hospital_mortality": {
+            "numOfNotNull": 10000,
+            "numOfTrue": 1640
+          },
+          "outcome_readmission_30d": {
+            "numOfNotNull": 10000,
+            "numOfTrue": 3100
+          },
+          "outcome_discharge_disposition": {
+            "numOfNotNull": 10000,
+            "valueSet": ["home", "rehab", "nursing_facility", "death"],
+            "cardinalityPerItem": {
+              "home": 4100,
+              "rehab": 2200,
+              "nursing_facility": 2100,
+              "death": 1600
+            }
+          },
+          "outcome_severity_score": {
+            "numOfNotNull": 10000,
+            "min": 0.0,
+            "max": 10.0,
+            "avg": 6.9,
+            "q1": 5.2,
+            "q2": 7.1,
+            "q3": 8.8,
+            "histogram": [
+              {"bin": 1, "count": 200},
+              {"bin": 3, "count": 800},
+              {"bin": 5, "count": 2100},
+              {"bin": 7, "count": 3500},
+              {"bin": 9, "count": 3400}
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
