@@ -104,12 +104,38 @@ def drift_detection(config):
     def extract_features(metadata):
         feats = []
         if "entries" in metadata and len(metadata["entries"]) > 0:
-            if "featureSet" in metadata["entries"][0]:
-                feats.extend(metadata["entries"][0]["featureSet"].get("features", []))
+            entry = metadata["entries"][0]
+            if "featureSet" in entry:
+                feats.extend(entry["featureSet"].get("features", []))
+            if "features" in entry:
+                feats.extend(entry["features"])
+            if "outcomes" in entry:
+                feats.extend(entry["outcomes"])
+                
+            datasetStats = entry.get("datasetStats", {})
+            featureStats = datasetStats.get("featureStats", {})
+            outcomeStats = datasetStats.get("outcomeStats", {})
+            
+            new_feats = []
+            for f in feats:
+                f_copy = f.copy()
+                if "statistics" not in f_copy:
+                    stats = featureStats.get(f_copy["name"]) or outcomeStats.get(f_copy["name"]) or {}
+                    mapped_stats = {}
+                    for k, v in stats.items():
+                        if k == "q1": mapped_stats["Q1"] = v
+                        elif k == "q2": mapped_stats["Q2"] = v
+                        elif k == "q3": mapped_stats["Q3"] = v
+                        else: mapped_stats[k] = v
+                    if mapped_stats:
+                        f_copy["statistics"] = mapped_stats
+                new_feats.append(f_copy)
+            feats = new_feats
+            
         if "entity" in metadata:
             feats.extend(metadata["entity"].get("features", []))
             feats.extend(metadata["entity"].get("outcomes", []))
-        
+            
         # Deduplicate
         res = []
         seen = set()
@@ -205,7 +231,7 @@ def drift_detection(config):
         "features": drift_features
     }
 
-    with open("data_drift.json", "w") as json_file_out:
+    with open("data_drift_test.json", "w") as json_file_out:
         json.dump(output, json_file_out, indent=4)
 
     logstash_url = "https://matrix.srdc.com.tr/ai4hf/logstash"
